@@ -1,0 +1,79 @@
+################################################################################
+# Tony Lentini
+# Histogram in R (repeat for multiple variables) 
+# CSU Global
+# MIS-581: Capstone - Business Intelligence and Data Analytics
+################################################################################
+# Set the working directory
+setwd("C:/Users/t_len/OneDrive/Documents/_Colorado State Univ/13 MIS_581")
+
+# 1) Load the csv file 
+data_frame <- read.csv("Telco_Customer_Churn2.csv", header = TRUE, sep = ",")
+
+# 2) Calculate the summary of TotalCharges in the training data
+summary(data_frame$TotalCharges)
+
+# Step 3 Plot a histogram for the distribution of TotalCharges
+hist(data_frame$TotalCharges, main = "Distribution of TotalCharges", xlab = "Customer Total Charges", col = "skyblue")
+
+
+install.packages("ggplot2")
+library(ggplot2)
+
+ggplot(data = data_frame, aes(x = TotalCharges)) +
+  geom_histogram(color = "white", fill = "blue") +
+  xlim(0, 1000000)
+
+# t-test 90% confidence interval:
+t.test(data_frame$TotalCharges, conf.level=.90)
+
+# t-test 95% confidence interval:
+t.test(data_frame$TotalCharges, conf.level=.95)
+
+# t-test 99% confidence interval:
+t.test(data_frame$TotalCharges, conf.level=.99)
+
+# Scatter Plot
+plot(data_frame$TotalCharges, data_frame$Churn, pch=16, cex=2, col="blue", xlim=c(150000,500000))
+
+# Linear regression model
+mod<-lm(data_frame$TotalCharges~data_frame$Churn)
+summary(mod)
+
+plot(data_frame$TotalCharges, data_frame$Churn,
+     pch=16, cex=2, col="blue", xlim=c(150000,500000))
+
+abline(lm(data_frame$TotalCharges~data_frame$Churn))
+
+date()
+
+
+
+################################################################################
+# Tony Lentini
+# Box Plots in R
+# CSU Global
+# MIS-581: Capstone - Business Intelligence and Data Analytics
+################################################################################
+# STEP 1) Read in the csv file into an R data frame.
+
+# Set the Working Directory to the folder where the .csv file is located:
+setwd("C:/Users/t_len/OneDrive/Documents/_Colorado State Univ/13 MIS_581")
+
+getwd()
+
+mydf <- read.csv("Telco_Customer_Churn2.csv", header = TRUE, sep = ",")
+
+# Generate Box Plots for a Visual of <variables in question> vs. Churn
+boxplot(tenure ~ Churn, data = mydf,
+        main = "Tenure vs. Churn",
+        xlab = "Churn",
+        ylab = "Tenure")
+
+
+
+boxplot(StreamingTV ~ Churn, data = mydf,
+        main = "StreamingTV vs. Churn",
+        xlab = "Churn",
+        ylab = "StreamingTV")
+
